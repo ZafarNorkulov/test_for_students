@@ -39,7 +39,6 @@ const RoutesMiddleware = () => {
     <Routes>
       {public_routes?.length &&
         public_routes.map((element) => {
-          console.log(element)
           return render_route(element);
         })}
       <Route
