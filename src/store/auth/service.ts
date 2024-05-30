@@ -14,9 +14,9 @@ const SignIn = createAsyncThunk(
       const reponse = await instance(options);
       const _data = reponse.data;
 
-      if(_data?.token){
+      if(_data?.access){
 
-        localStorage.setItem("access_token", _data.token);
+        localStorage.setItem("access_token", _data.access);
       }
       return _data;
     } catch (error:any) {

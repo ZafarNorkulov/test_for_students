@@ -7,7 +7,7 @@ const Home = () => {
     {
       title: "Imtihon",
       img: TestImg,
-      url: "exam",
+      url: "exams",
     },
   ];
   return (
