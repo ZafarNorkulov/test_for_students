@@ -8,8 +8,8 @@ const SignIn = createAsyncThunk(
     try {
       const options: AxiosRequestConfig =
         data.type === "login"
-          ? { url: "/auth/login", method: "POST", data: data?.data ?? null }
-          : { url: "auth/me", method: "GET", params: {} };
+          ? { url: "auth/jwt/create/", method: "POST", data: data?.data ?? null }
+          : { url: "auth/users/me", method: "GET", params: {} };
 
       const reponse = await instance(options);
       const _data = reponse.data;

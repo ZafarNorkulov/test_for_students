@@ -1,0 +1,23 @@
+.ant-popover-inner {
+  padding: 0!important;
+}
+
+.profile-block {
+  a:hover {
+    color: #000;
+  }
+  li {
+    font-weight: 400;
+    font-size:1.2rem;
+    line-height: 156%;
+    letter-spacing: -0.02em;
+    color: #080808;
+    padding: 21px 29px 21px 34px;
+    transition: 0.2s;
+    font-family: Inter, sans-serif;
+    cursor: pointer;
+    &:hover{
+        background: hsla(0,0%,90%,.723);
+    }
+  }
+}

@@ -46,7 +46,7 @@ const Login = () => {
         >
           <Form.Item
             label="J.SH.Sh.I.R:"
-            name="login"
+            name="username"
             rules={[
               { required: true, message: "Iltimos J.SH.SH.I.R ni kiriting" },
             ]}
