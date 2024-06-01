@@ -4,22 +4,25 @@ import instance from "../../configs/axios.config";
 
 const SignIn = createAsyncThunk(
   "user/SignIn",
-  async (data: { type: string; data?: any; role?: string }, { rejectWithValue }) => {
+  async (
+    data: { type: string; data?: any; role?: string },
+    { rejectWithValue }
+  ) => {
     try {
-      const options: AxiosRequestConfig =
-        data.type === "login"
-          ? { url: "auth/jwt/create/", method: "POST", data: data?.data ?? null }
-          : { url: "auth/users/me", method: "GET", params: {} };
+      const options: AxiosRequestConfig = {
+        url: "auth/jwt/create/",
+        method: "POST",
+        data: data?.data ?? null,
+      };
 
       const reponse = await instance(options);
       const _data = reponse.data;
 
-      if(_data?.access){
-
+      if (_data?.access) {
         localStorage.setItem("access_token", _data.access);
       }
       return _data;
-    } catch (error:any) {
+    } catch (error: any) {
       return rejectWithValue(error.response);
     }
   }
