@@ -1,6 +1,6 @@
 import Login from "../pages/auth/login";
 import Exams from "../pages/exams/index.tsx";
-import TestByName from "../pages/exams/testByName.tsx";
+import TestByName from "../pages/exams/test/testByName.tsx";
 import Home from "../pages/index.tsx";
 
 export const public_routes = [

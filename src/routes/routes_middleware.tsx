@@ -18,7 +18,13 @@ function RenderComponent(MyComponent: RoutesTypeElement) {
 
 const RoutesMiddleware = () => {
   const render_route = (element: RoutesTypeElement) => {
-    return <Route key={element.path} path={element.path} element={RenderComponent(element)} />;
+    return (
+      <Route
+        key={element.path}
+        path={element.path}
+        element={RenderComponent(element)}
+      />
+    );
   };
   let token = localStorage.getItem("access_token");
   const auth = useAppSelector((state) => state.auth);
@@ -28,7 +34,7 @@ const RoutesMiddleware = () => {
       <Routes>
         {private_routes.length &&
           private_routes.map((element) => {
-             return render_route(element);
+            return render_route(element);
           })}
         <Route path="/signin" element={<Navigate to="/" />} />
       </Routes>

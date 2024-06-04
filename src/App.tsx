@@ -1,10 +1,9 @@
 import { useEffect } from "react";
-import "./App.scss";
 import RoutesMiddleware from "./routes/routes_middleware";
 import { useAppDispatch } from "./store";
 import SignIn from "./store/auth/service";
 
-function App() {
+const App = () => {
   const { pathname } = window.location;
   const dispatch = useAppDispatch();
 
@@ -13,11 +12,12 @@ function App() {
       dispatch(SignIn({ data: null, type: "" }));
     }
   }, []);
+
   return (
-    <>
+    <div>
       <RoutesMiddleware />
-    </>
+    </div>
   );
-}
+};
 
 export default App;
