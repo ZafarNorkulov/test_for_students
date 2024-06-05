@@ -7,19 +7,19 @@ import instance from "../../configs/axios.config";
 const SignIn = createAsyncThunk(
   "user/SignIn",
   async (
-    data: { type: string; data?: any; role?: string },
+    data: { data?: any; role?: string },
     { rejectWithValue }
   ) => {
     try {
-      const options: AxiosRequestConfig =
-        data.type === "login"
-          ? { url: "auth/jwt/create", method: "POST", data: data?.data ?? null }
-          : { url: "auth/me", method: "GET", params: {} };
+      const isHasToken = localStorage.getItem("access_token");
+      const options: AxiosRequestConfig = !isHasToken
+        ? { url: "auth/jwt/create", method: "POST", data: data?.data ?? null }
+        : { url: "auth/me", method: "GET", params: {} };
       const response = await instance(options);
       const _data = response.data;
 
-      if (_data?.token) {
-        localStorage.setItem("access_token", _data.token);
+      if (_data?.access) {
+        localStorage.setItem("access_token", _data.access);
       }
       return _data;
     } catch (error: any) {

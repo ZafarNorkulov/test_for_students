@@ -12,7 +12,7 @@ const Login = () => {
 
   const onFinish = async (values: FieldType) => {
     try {
-      await dispatch(SignIn({ data: values, type: "login" }));
+      await dispatch(SignIn({ data: values }));
     } catch (err) {
       console.log(err);
     }
