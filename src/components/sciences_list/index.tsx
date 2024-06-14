@@ -2,7 +2,7 @@ import { Table, TableColumnsType } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
-import { SciencesType } from "../../types/data.models";
+import { IAllowSciences } from "../../types/data.models";
 
 const SciencesList = () => {
   interface DataType {
@@ -15,10 +15,9 @@ const SciencesList = () => {
     actions: JSX.Element;
   }
 
-
-  const { data: scienses } = useGetData<SciencesType[]>({
+  const { data: scienses } = useGetData<IAllowSciences[]>({
     queryKey: ["sciences"],
-    url: `api/v1/quiz/sciences/`,
+    url: `api/v1/quiz/exam/ `,
   });
 
   const columns: TableColumnsType<DataType> = [
@@ -54,20 +53,23 @@ const SciencesList = () => {
       width: 120,
     },
   ];
- 
-
 
   const data: DataType[] = (scienses ?? []).map(
-    (item: SciencesType, index) => ({
+    (item: IAllowSciences, index) => ({
       key: item.id,
       number: index + 1,
-      name: item.name,
+      name: item?.science?.name,
       result: "0/0",
       questions: `30 ta`,
       time: `25 daqiqa`,
       actions: (
-        <Link to={`/exams/test/${item?.id}`}>
-          <button className="bg-blue-500 text-white disabled:bg-opacity-80 disabled:cursor-not-allowed" disabled={!item?.is_active}>Boshlash</button>
+        <Link to={`/exams/test/${item?.science?.id}`}>
+          <button
+            className="bg-blue-500 text-white disabled:bg-opacity-80 disabled:cursor-not-allowed"
+            disabled={!item?.is_exam}
+          >
+            Boshlash
+          </button>
         </Link>
       ),
     })

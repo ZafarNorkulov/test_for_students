@@ -9,10 +9,11 @@ const TestByName = () => {
     queryKey: ["questions"],
     url: `api/v1/quiz/test/${params.slug}`,
   });
+  console.log(params);
   return (
     <div className="container mx-auto">
       <div className="pagination">Pagination</div>
-      <QuizById quizData={quizData} />
+      {quizData && <QuizById quizData={quizData} />}
     </div>
   );
 };

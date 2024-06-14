@@ -1,9 +1,17 @@
-export interface SciencesType {
+export interface IAllowSciences {
+  id: number;
+  exam_id: string;
+  user: number;
+  science: IScience;
+  group: number;
+  is_active: boolean;
+  is_exam: boolean;
+}
+export interface IScience {
   id: number;
   science_id: string;
   is_active: boolean;
   name: string;
-  group: number[];
 }
 
 export interface IQuiz {
@@ -11,7 +19,7 @@ export interface IQuiz {
   question_id: string;
   title: string;
   is_active: boolean;
-  science: SciencesType;
+  science: IScience;
   answers: IAnswers[];
 }
 export interface IAnswers {
