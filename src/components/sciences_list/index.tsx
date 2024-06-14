@@ -2,6 +2,7 @@ import { Table, TableColumnsType } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
+import { SciencesType } from "../../types/data.models";
 
 const SciencesList = () => {
   interface DataType {
@@ -53,13 +54,7 @@ const SciencesList = () => {
       width: 120,
     },
   ];
-  interface SciencesType {
-    id: number;
-    science_id: string;
-    is_active: boolean;
-    name: string;
-    group: number[];
-  }
+ 
 
 
   const data: DataType[] = (scienses ?? []).map(
@@ -71,7 +66,7 @@ const SciencesList = () => {
       questions: `30 ta`,
       time: `25 daqiqa`,
       actions: (
-        <Link to={`/exams/test/${item?.name.toLowerCase()}`}>
+        <Link to={`/exams/test/${item?.id}`}>
           <button className="bg-blue-500 text-white disabled:bg-opacity-80 disabled:cursor-not-allowed" disabled={!item?.is_active}>Boshlash</button>
         </Link>
       ),
