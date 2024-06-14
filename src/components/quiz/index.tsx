@@ -31,9 +31,10 @@ const QuizBySlug = () => {
   //     ],
   //   },
   // ]);
+
   const { data } = useGetData({
-    queryKey: ["quiz"],
-    url: "api/v1/quiz/questions/",
+    queryKey: ["questions"],
+    url: `api/v1/quiz/questions/`,
   });
   console.log(data);
 

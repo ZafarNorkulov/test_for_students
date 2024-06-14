@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { QueryClient } from "@tanstack/react-query";
 import SignIn from "./service";
+import { useNavigate } from "react-router-dom";
 const queryClient = new QueryClient();
 
 export type TypeInitialStateAuth = {
@@ -45,10 +46,11 @@ const SignInSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(SignIn.pending, (state, action: PayloadAction<any>) => {
+      .addCase(SignIn.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(SignIn.fulfilled, (state, action: PayloadAction<any>) => {
+        console.log(action);
         if (action.payload) {
           state.access_token = action?.payload?.access_token || "";
           state.message = action.payload.message;
@@ -57,6 +59,7 @@ const SignInSlice = createSlice({
         } else {
           state.isLoading = false;
           state.isAuthenticated = false;
+          window.history.pushState({ someprop: "somevalue" }, "", "/signin");
         }
       })
       .addCase(SignIn.rejected, (state, action: PayloadAction<any>) => {
