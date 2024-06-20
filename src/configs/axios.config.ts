@@ -6,8 +6,8 @@ const onRequest = (
   config: InternalAxiosRequestConfig
 ): InternalAxiosRequestConfig => {
   config.headers!.Accept = "application/json";
-  config.headers!["Access-Control-Allow-Credentials"] = true;
-  config.headers!["cross-origin-opener-policy"] = "same-origin";
+  const access_token = localStorage.getItem("access_token") ?? "";
+  config.headers.Authorization = `Bearer ${access_token}`;
   config.baseURL = import.meta.env.VITE_PUBLIC_BASE_URL;
   return config;
 };
