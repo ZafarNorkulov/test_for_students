@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { IQuiz } from "../../types/data.models";
 import instance from "../../configs/axios.config";
+import Timer from "../helperComponents/timer";
 
 const QuizById = ({
   quizData,
@@ -10,7 +12,8 @@ const QuizById = ({
   scienceId: string | undefined;
 }) => {
   const [myAnswers, setMyAnswers] = useState<TmyAnswer[]>([]);
-
+  const [remaindTime, setRemaindTime] = useState<number>(1);
+  const navigate = useNavigate();
   // !!! TYPES
   type TmyAnswer = { question_id: number; answer_id: number };
 
@@ -53,56 +56,78 @@ const QuizById = ({
     };
   }, []);
   const SendAnswers = async () => {
-    const response = await instance({
+    const response: { message: string } = await instance({
       url: `api/v1/quiz/answer-check/${scienceId}/`,
       method: "POST",
       data: myAnswers,
     });
-    console.log(response);
+    if (response.message === "success") {
+      navigate("/exams/result");
+    }
   };
   if (!quizData) {
     return "Loading";
   }
+  if (remaindTime == 0) {
+    if (typeof window != "undefined") {
+      navigate("/exams/result");
+    }
+  }
 
   return (
-    <div className="question_wrap">
-      {quizData?.map((item, index) => (
-        <div className="question__content">
-          <h4 className="question__title">
-            {index + 1}. {item?.title}
-          </h4>
-          <div className="answers__list">
-            {item?.answers?.map((anw, anwIndex) => (
-              <label
-                key={anwIndex}
-                htmlFor={`answer${item?.id}-${anwIndex}`}
-                className="answer__item"
-              >
-                <input
-                  type="radio"
-                  name={`answer${item?.id}`}
-                  id={`answer${item?.id}-${anwIndex}`}
-                  checked={myAnswers?.some(
-                    (answer) =>
-                      answer.question_id === item.id &&
-                      answer.answer_id === anw.id
-                  )}
-                  onClick={() =>
-                    handleSetMyAnswers({
-                      question_id: item?.id,
-                      answer_id: anw?.id,
-                    })
-                  }
-                />
-                {anw?.answer}
-              </label>
-            ))}
+    <div>
+      <div className="pagination">
+        {
+          quizData?.map((_,index)=>(
+
+            <strong key={index}>{index+1}</strong>
+          ))
+        }
+      </div>
+      <div className="w-full">
+        <p className="ml-auto w-max">
+          <Timer time={1800} setRemaindTime={setRemaindTime} />
+        </p>
+      </div>
+      <div className="question_wrap">
+        {quizData?.map((item, index) => (
+          <div className="question__content">
+            <h4 className="question__title">
+              {index + 1}. {item?.title}
+            </h4>
+            <div className="answers__list">
+              {item?.answers?.map((anw, anwIndex) => (
+                <label
+                  key={anwIndex}
+                  htmlFor={`answer${item?.id}-${anwIndex}`}
+                  className="answer__item"
+                >
+                  <input
+                    type="radio"
+                    name={`answer${item?.id}`}
+                    id={`answer${item?.id}-${anwIndex}`}
+                    checked={myAnswers?.some(
+                      (answer) =>
+                        answer.question_id === item.id &&
+                        answer.answer_id === anw.id
+                    )}
+                    onClick={() =>
+                      handleSetMyAnswers({
+                        question_id: item?.id,
+                        answer_id: anw?.id,
+                      })
+                    }
+                  />
+                  {anw?.answer}
+                </label>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
-      <button onClick={SendAnswers} className="bg-blue-500 text-white ">
-        Testni yakunlash
-      </button>
+        ))}
+        <button onClick={SendAnswers} className="bg-blue-500 text-white ">
+          Testni yakunlash
+        </button>
+      </div>
     </div>
   );
 };
