@@ -60,6 +60,9 @@ const QuizById = ({
     });
     console.log(response);
   };
+  if (!quizData) {
+    return "Loading";
+  }
 
   return (
     <div className="question_wrap">
@@ -97,8 +100,9 @@ const QuizById = ({
           </div>
         </div>
       ))}
-      <button onClick={SendAnswers} className="bg-blue-500 text-white float-right">Testni tugatish</button>
-
+      <button onClick={SendAnswers} className="bg-blue-500 text-white ">
+        Testni yakunlash
+      </button>
     </div>
   );
 };

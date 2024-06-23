@@ -1,4 +1,4 @@
-import { Table, TableColumnsType } from "antd";
+import { Spin, Table, TableColumnsType } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
@@ -15,7 +15,7 @@ const SciencesList = () => {
     actions: JSX.Element;
   }
 
-  const { data: scienses } = useGetData<IAllowSciences[]>({
+  const { data: scienses, isLoading } = useGetData<IAllowSciences[]>({
     queryKey: ["sciences"],
     url: `api/v1/quiz/exam/ `,
   });
@@ -75,7 +75,9 @@ const SciencesList = () => {
     })
   );
   return (
-    <Table columns={columns} dataSource={data} bordered pagination={false} />
+    <Spin spinning={isLoading}>
+      <Table columns={columns} dataSource={data} bordered pagination={false} />
+    </Spin>
   );
 };
 

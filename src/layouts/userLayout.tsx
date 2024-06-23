@@ -2,29 +2,12 @@ import { ReactElement } from "react";
 import Logo from "../assets/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../store/auth";
-import { Avatar, Modal, Popover } from "antd";
+import { Avatar, Popover } from "antd";
 import { useAppDispatch } from "../store";
 
 const UserLayout = ({ children }: { children: ReactElement }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { confirm } = Modal;
-  // const showDeleteConfirm = () => {
-  //   confirm({
-  //     title: "Chiqishga ishonchingiz komilmi?",
-  //     // icon: <ExclamationCircleFilled />,
-  //     okText: "Ha",
-  //     okType: "danger",
-  //     cancelText: "Yo'q",
-  //     onOk() {
-  //       dispatch(logout());
-  //       navigate("/signin");
-  //     },
-  //     onCancel() {
-  //       console.log("Cancel");
-  //     },
-  //   });
-  // };
   const content = (
     <ul className="profile-block">
       <li className="flex item-center gap-x-4 ">
@@ -78,6 +61,7 @@ const UserLayout = ({ children }: { children: ReactElement }) => {
         </Popover>
       </header>
       {children}
+      <footer className="mt-3"></footer>
     </div>
   );
 };
