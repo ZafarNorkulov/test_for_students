@@ -1,7 +1,3 @@
-import { Table, TableColumnsType } from "antd";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import useGetData from "../../hooks/useGetData";
 import SciencesList from "../../components/sciences_list";
 
 
