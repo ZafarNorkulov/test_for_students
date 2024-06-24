@@ -68,7 +68,7 @@ const Login = () => {
                   },
                 ]}
               >
-                <Input.Password className="px-[11px] py-[6px] w-full"/>
+                <Input.Password className="px-[11px] py-[6px] w-full" />
               </Form.Item>
               <button className="bg-blue-500 px-8 float-end text-white">
                 Kirish

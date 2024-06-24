@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 
 const Timer = ({ time, setRemaindTime }: { time: number; setRemaindTime: Dispatch<SetStateAction<number>> }) => {
   const [delay, setDelay] = useState(time);

@@ -8,10 +8,11 @@ const TestByName = () => {
   const { data: quizData } = useGetData<IQuiz[]>({
     queryKey: ["questions"],
     url: `api/v1/quiz/test/${params.slug}`,
+    
   });
 
   return (
-    <div className="container mx-auto w-full">
+    <div className="">
       {quizData && <QuizById quizData={quizData} scienceId={params.slug} />}
     </div>
   );

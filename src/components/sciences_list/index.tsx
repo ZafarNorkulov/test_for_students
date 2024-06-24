@@ -1,5 +1,4 @@
 import { Spin, Table, TableColumnsType } from "antd";
-import React from "react";
 import { Link } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
 import { IAllowSciences } from "../../types/data.models";

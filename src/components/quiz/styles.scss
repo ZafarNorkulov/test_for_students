@@ -1,6 +1,78 @@
+.sticky-head {
+  padding: 10px;
+  margin-bottom: 50px;
+  &.active {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #474646af;
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1),
+      0 8px 10px -6px rgb(0 0 0 / 0.1);
+    transition: all 0.3s;
+  }
+}
+.confirm-content {
+  h4 {
+    width: 300px;
+  }
+  button:nth-child(1) {
+    &:hover {
+      border: 1px solid #3b82f6;
+      color: #3b82f6;
+    }
+  }
+  button:nth-child(2) {
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  // padding: 20px 0;
+  background: #fff;
+  gap: 3px;
+  &__item {
+    background-color: transparent;
+    border: 1px solid #010101a2;
+    border-radius: 5px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: -0.44px;
+    color: #111;
+    transition: 0.3s;
+    user-select: none;
+    &.active {
+      background: #3f9cfb;
+      border-color: #3f9cfb;
+      color: #fff;
+      &:hover {
+        background: #3f9cfb;
+        border-color: #3f9cfb;
+        color: #fff;
+      }
+    }
+    // &:hover {
+    //   background: #ccccccb0;
+    // }
+  }
+}
 .question__content {
   padding: 30px;
-  border: 1px solid #0451404f;
+  border: 1px solid #0a516d4f;
   border-radius: 10px;
   margin-bottom: 20px;
   .question__title {
@@ -33,34 +105,23 @@
         height: 16px;
         transition: 0.3s;
       }
-      &.correct {
-        background-color: #22c235;
+      &.active {
+        background-color: #409cfb;
         color: white;
-      }
-      &.wrong {
-        background-color: #ed2b2a;
-        color: white;
-      }
-      &.disabled {
-        input[type="radio"] {
-          &:checked {
-            &::after {
-              width: 15px;
-              height: 15px;
-              top: 0px;
-              left: 0px;
-              position: relative;
-              background-color: #0d6efd;
-              content: "";
-              display: inline-block;
-              visibility: visible;
-              border: 2px solid white;
-              border-radius: 50% !important;
-              overflow: hidden;
-            }
-          }
-        }
+        border-color: #409cfb;
       }
     }
+  }
+}
+.end-btn {
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 116.3%;
+  padding: 13px 23px 14px 24px;
+  border: none;
+  outline: none;
+  &:hover {
+    opacity: 0.9;
   }
 }

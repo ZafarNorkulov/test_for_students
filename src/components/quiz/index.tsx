@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { IQuiz } from "../../types/data.models";
 import instance from "../../configs/axios.config";
 import Timer from "../helperComponents/timer";
+import { Empty, Popover } from "antd";
 
 const QuizById = ({
   quizData,
@@ -13,6 +14,8 @@ const QuizById = ({
 }) => {
   const [myAnswers, setMyAnswers] = useState<TmyAnswer[]>([]);
   const [remaindTime, setRemaindTime] = useState<number>(1);
+  const [openConfirm, setOpenConfirm] = useState<boolean>(false);
+  const [paginationIndex, setPaginationIndex] = useState<number[]>([]);
   const navigate = useNavigate();
   // !!! TYPES
   type TmyAnswer = { question_id: number; answer_id: number };
@@ -56,13 +59,14 @@ const QuizById = ({
     };
   }, []);
   const SendAnswers = async () => {
-    const response: { message: string } = await instance({
+    const response: { data: { message: string } } = await instance({
       url: `api/v1/quiz/answer-check/${scienceId}/`,
       method: "POST",
       data: myAnswers,
     });
-    if (response.message === "success") {
+    if (response.data.message === "success") {
       navigate("/exams/result");
+      setOpenConfirm(false);
     }
   };
   if (!quizData) {
@@ -73,25 +77,85 @@ const QuizById = ({
       navigate("/exams/result");
     }
   }
-
-  return (
-    <div>
-      <div className="pagination">
-        {
-          quizData?.map((_,index)=>(
-
-            <strong key={index}>{index+1}</strong>
-          ))
-        }
+  const content = (
+    <div className="px-2 py-1 flex flex-col gap-y-6 font-bold confirm-content">
+      <h4 className="text-2xl">Testni yakunlaysizmi?</h4>
+      <div className="text-end confirm-btns">
+        <button
+          className="border border-slate-300 px-[7px] m-1 rounded-[4px] leading-3 w-20"
+          onClick={() => setOpenConfirm(false)}
+        >
+          Yo'q
+        </button>
+        <button
+          className="border border-slate-300 px-[7px] m-1 rounded-[4px] leading-3 w-20 bg-blue-600 text-white"
+          onClick={SendAnswers}
+        >
+          Ha
+        </button>
       </div>
-      <div className="w-full">
-        <p className="ml-auto w-max">
-          <Timer time={1800} setRemaindTime={setRemaindTime} />
-        </p>
+    </div>
+  );
+  useEffect(() => {
+    if (!quizData || !myAnswers) {
+      // Handle the case when quizData or myAnswers is not defined
+      return; // Early return
+    }
+  
+    const indices: number[] = [];
+    quizData.forEach((question, index) => {
+      const answer = myAnswers.find(
+        (answer) => answer.question_id === question.id
+      );
+      if (answer) {
+        indices.push(index);
+      }
+    });
+    setPaginationIndex(indices);
+  }, [quizData, myAnswers]);
+const data =[1,2,3,4,5,6,7,8,9,10,11,12,13,12,2,2,2,2,2]
+  return quizData[0] ? (
+    <div className="relative">
+      <div className="sticky-head active ">
+        <div className="w-full grid grid-cols-12 items-end">
+          <div className="md:col-span-3 md:flex hidden"></div>
+          <div className="pagination md:col-span-7 col-span-12">
+            {data?.map((_, index) => {
+              const isAnswered = paginationIndex.includes(index);
+              return (
+                <strong
+                  key={index}
+                  id={`${index}`}
+                  className={`pagination__item ${isAnswered ? "active" : ""
+                    }`}
+                >
+                  {index + 1}
+                </strong>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-col justify-center items-end md:col-span-2 col-span-12">
+            <Timer time={1500} setRemaindTime={setRemaindTime} />
+            <Popover
+              placement="bottomRight"
+              content={content}
+              arrow={true}
+              trigger={"click"}
+              open={openConfirm}
+              onOpenChange={() => setOpenConfirm(!openConfirm)}
+              className="cursor-pointer flex items-center w-max gap-x-3"
+            >
+              <button className="bg-blue-500 end-btn ">Testni yakunlash</button>
+            </Popover>
+          </div>
+        </div>
       </div>
-      <div className="question_wrap">
+
+      <div className="question_wrap mx-auto container">
         {quizData?.map((item, index) => (
-          <div className="question__content">
+          <div className="question__content" >
+            <a href={`#${index}`}></a>
             <h4 className="question__title">
               {index + 1}. {item?.title}
             </h4>
@@ -124,12 +188,13 @@ const QuizById = ({
             </div>
           </div>
         ))}
-        <button onClick={SendAnswers} className="bg-blue-500 text-white ">
-          Testni yakunlash
-        </button>
+
       </div>
     </div>
-  );
+  ) : <div className="h-[70vh] flex items-center justify-center">
+    <Empty className="mt-8" />
+  </div>
+
 };
 
 export default QuizById;

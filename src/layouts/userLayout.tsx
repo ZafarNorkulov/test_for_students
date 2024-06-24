@@ -37,7 +37,14 @@ const UserLayout = ({ children }: { children: ReactElement }) => {
 
   return (
     <div>
-      <header className="flex items-center justify-between shadow-xl overflow-hidden px-4 py-2 mb-5">
+      <header
+        className={`flex items-center justify-between shadow-xl overflow-hidden px-4 py-2 ${
+          typeof window !== "undefined" &&
+          window.location.pathname.includes("/exams/test")
+            ? ""
+            : "mb-5"
+        }`}
+      >
         <Link
           className="logo flex items-center max-w-[30%] text-[#111] text-[1.1rem] uppercase gap-x-[5px]"
           to={"/"}

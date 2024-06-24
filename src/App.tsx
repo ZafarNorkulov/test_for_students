@@ -9,7 +9,7 @@ const App = () => {
 
   useEffect(() => {
     if (pathname !== "/signin") {
-      dispatch(SignIn({ data: null, type: "" }));
+      dispatch(SignIn({ data: null }));
     }
   }, []);
 
