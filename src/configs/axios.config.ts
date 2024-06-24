@@ -1,6 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
 
-let instance = axios.create();
+const instance = axios.create();
 
 const onRequest = (
   config: InternalAxiosRequestConfig
