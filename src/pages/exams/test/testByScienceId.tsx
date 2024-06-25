@@ -8,8 +8,9 @@ const TestByName = () => {
   const { data: quizData } = useGetData<IQuiz[]>({
     queryKey: ["questions"],
     url: `api/v1/quiz/test/${params.slug}`,
-    
+
   });
+  localStorage.setItem("scienceId", `${params.slug}`);
 
   return (
     <div className="">

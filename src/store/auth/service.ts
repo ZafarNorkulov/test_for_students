@@ -1,13 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosRequestConfig } from "axios";
 import instance from "../../configs/axios.config";
+import store from "..";
+import { logout } from ".";
 
 const SignIn = createAsyncThunk(
   "user/SignIn",
-  async (
-    data: { data?: any; role?: string },
-    { rejectWithValue }
-  ) => {
+  async (data: { data?: any }, { rejectWithValue }) => {
     try {
       const isHasToken = localStorage.getItem("access_token");
       const options: AxiosRequestConfig = !isHasToken
@@ -42,7 +41,7 @@ export default SignIn;
 //       if (response.status === 200) {
 //         localStorage.setItem("access_token", response.data.access);
 //         localStorage.setItem("refresh_token", response.data.refresh);
-//         store.dispatch(SignIn({ data: null, type: "" }));
+//         store.dispatch(SignIn({ data: null }));
 //       }
 //     } else {
 //       store.dispatch(logout());

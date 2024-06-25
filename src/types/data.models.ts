@@ -29,3 +29,13 @@ export interface IAnswers {
   is_active: boolean;
   question: number;
 }
+
+export interface IQuestionResult {
+  id: number;
+  result_id: string;
+  user: number;
+  science: IScience;
+  group: number;
+  is_active: boolean;
+  question_result: string;
+}

@@ -113,14 +113,13 @@ const QuizById = ({
     });
     setPaginationIndex(indices);
   }, [quizData, myAnswers]);
-const data =[1,2,3,4,5,6,7,8,9,10,11,12,13,12,2,2,2,2,2]
   return quizData[0] ? (
     <div className="relative">
       <div className="sticky-head active ">
         <div className="w-full grid grid-cols-12 items-end">
           <div className="md:col-span-3 md:flex hidden"></div>
           <div className="pagination md:col-span-7 col-span-12">
-            {data?.map((_, index) => {
+            {quizData?.map((_, index) => {
               const isAnswered = paginationIndex.includes(index);
               return (
                 <strong
