@@ -65,7 +65,7 @@ const QuizById = ({
       data: myAnswers,
     });
     if (response.data.message === "success") {
-      navigate("/exams/result");
+      navigate("/exams");
       setOpenConfirm(false);
     }
   };
@@ -74,7 +74,12 @@ const QuizById = ({
   }
   if (remaindTime == 0) {
     if (typeof window != "undefined") {
-      navigate("/exams/result");
+      instance({
+        url: `api/v1/quiz/answer-check/${scienceId}/`,
+        method: "POST",
+        data: myAnswers,
+      });
+      navigate("/exams");
     }
   }
   const content = (
@@ -101,7 +106,7 @@ const QuizById = ({
       // Handle the case when quizData or myAnswers is not defined
       return; // Early return
     }
-  
+
     const indices: number[] = [];
     quizData.forEach((question, index) => {
       const answer = myAnswers.find(

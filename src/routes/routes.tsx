@@ -1,6 +1,5 @@
 import Login from "../pages/auth/login";
 import Exams from "../pages/exams/index.tsx";
-import QuizResult from "../pages/exams/result/index.tsx";
 import TestByName from "../pages/exams/test/testByScienceId.tsx";
 import Home from "../pages/index.tsx";
 
@@ -31,10 +30,5 @@ export const private_routes = [
     component: TestByName,
     structure: "layout",
   },
-  {
-    name: "Result",
-    path: `/exams/result`,
-    component: QuizResult,
-    structure: "layout",
-  },
+
 ];

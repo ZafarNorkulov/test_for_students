@@ -1,7 +1,7 @@
 import { Spin, Table, TableColumnsType } from "antd";
 import { Link } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
-import { IAllowSciences } from "../../types/data.models";
+import { IAllowSciences, IQuestionResult } from "../../types/data.models";
 
 const SciencesList = () => {
   interface DataType {
@@ -17,6 +17,13 @@ const SciencesList = () => {
   const { data: scienses, isLoading } = useGetData<IAllowSciences[]>({
     queryKey: ["sciences"],
     url: `api/v1/quiz/exam/ `,
+  });
+  const scienceId = localStorage.getItem("scienceId");
+
+  const { data: result } = useGetData<IQuestionResult>({
+    queryKey: ["questions"],
+    url: `api/v1/quiz/answer/${scienceId}`,
+
   });
 
   const columns: TableColumnsType<DataType> = [
@@ -58,7 +65,7 @@ const SciencesList = () => {
       key: item.id,
       number: index + 1,
       name: item?.science?.name,
-      result: "0/0",
+      result: result && result?.question_result ? `${result?.question_result}/30` : "0/0",
       questions: `30 ta`,
       time: `25 daqiqa`,
       actions: (

@@ -28,7 +28,6 @@ const SignInSlice = createSlice({
     login(state) {
       state.isAuthenticated = true;
       state.isLoading = false;
-      state.access_token = "";
     },
     logout(state) {
       state.isAuthenticated = false;
@@ -61,7 +60,8 @@ const SignInSlice = createSlice({
         }
       })
       .addCase(SignIn.rejected, (state, action: PayloadAction<any>) => {
-        if (action?.payload?.data?.status === 0) {
+        console.log(action);
+        if (action?.payload?.status === 0) {
           state.error = action?.payload.data?.error?.message;
           state.isLoading = false;
         } else {
