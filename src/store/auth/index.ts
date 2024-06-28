@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { QueryClient } from "@tanstack/react-query";
 import SignIn from "./service";
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 
 export type TypeInitialStateAuth = {
   access_token?: string | null;
@@ -72,6 +72,6 @@ const SignInSlice = createSlice({
   },
 });
 
-export const { login, logout, loadingAuth } = SignInSlice.actions;
+// export const { login, logout, loadingAuth } = SignInSlice.actions;
 
 export default SignInSlice.reducer;
