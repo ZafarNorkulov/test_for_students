@@ -1,8 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosRequestConfig } from "axios";
 import instance from "../../configs/axios.config";
-import store from "..";
-import { logout } from ".";
 
 const SignIn = createAsyncThunk(
   "user/SignIn",
