@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { QueryClient } from "@tanstack/react-query";
 import SignIn from "./service";
-// const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
 export type TypeInitialStateAuth = {
   access_token?: string | null;
@@ -25,22 +25,22 @@ const SignInSlice = createSlice({
   name: "Login",
   initialState: initialState,
   reducers: {
-    // login(state) {
-    //   state.isAuthenticated = true;
-    //   state.isLoading = false;
-    // },
-    // logout(state) {
-    //   state.isAuthenticated = false;
-    //   state.message = "";
-    //   state.error = "";
-    //   state.access_token = null;
-    //   localStorage.removeItem("access_token");
-    //   localStorage.removeItem("refresh_token");
-    //   queryClient.clear();
-    // },
-    // loadingAuth(state) {
-    //   state.refreshLoading = false;
-    // },
+    login(state) {
+      state.isAuthenticated = true;
+      state.isLoading = false;
+    },
+    logout(state) {
+      state.isAuthenticated = false;
+      state.message = "";
+      state.error = "";
+      state.access_token = null;
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      queryClient.clear();
+    },
+    loadingAuth(state) {
+      state.refreshLoading = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -72,6 +72,6 @@ const SignInSlice = createSlice({
   },
 });
 
-// export const { login, logout, loadingAuth } = SignInSlice.actions;
+export const { login, logout, loadingAuth } = SignInSlice.actions;
 
 export default SignInSlice.reducer;
