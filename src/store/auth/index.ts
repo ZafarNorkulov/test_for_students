@@ -25,22 +25,22 @@ const SignInSlice = createSlice({
   name: "Login",
   initialState: initialState,
   reducers: {
-    login(state) {
-      state.isAuthenticated = true;
-      state.isLoading = false;
-    },
-    logout(state) {
-      state.isAuthenticated = false;
-      state.message = "";
-      state.error = "";
-      state.access_token = null;
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("refresh_token");
-      queryClient.clear();
-    },
-    loadingAuth(state) {
-      state.refreshLoading = false;
-    },
+    // login(state) {
+    //   state.isAuthenticated = true;
+    //   state.isLoading = false;
+    // },
+    // logout(state) {
+    //   state.isAuthenticated = false;
+    //   state.message = "";
+    //   state.error = "";
+    //   state.access_token = null;
+    //   localStorage.removeItem("access_token");
+    //   localStorage.removeItem("refresh_token");
+    //   queryClient.clear();
+    // },
+    // loadingAuth(state) {
+    //   state.refreshLoading = false;
+    // },
   },
   extraReducers: (builder) => {
     builder
