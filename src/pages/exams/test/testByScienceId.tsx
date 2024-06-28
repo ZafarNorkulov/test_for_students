@@ -13,7 +13,7 @@ const TestByName = () => {
   localStorage.setItem("scienceId", `${params.slug}`);
 
   return (
-    <div className="">
+    <div >
       {quizData && <QuizById quizData={quizData} scienceId={params.slug} />}
     </div>
   );

@@ -28,6 +28,8 @@ const SignInSlice = createSlice({
     login(state) {
       state.isAuthenticated = true;
       state.isLoading = false;
+      // state.access_token = action.payload.access_token;
+      // console.log(action)
     },
     logout(state) {
       state.isAuthenticated = false;
@@ -40,6 +42,9 @@ const SignInSlice = createSlice({
     },
     loadingAuth(state) {
       state.refreshLoading = false;
+    },
+    setUserInfo: (state, action) => {
+      state.access_token = action.payload;
     },
   },
   extraReducers: (builder) => {

@@ -39,3 +39,12 @@ export interface IQuestionResult {
   is_active: boolean;
   question_result: string;
 }
+
+export interface IUser {
+  id: number;
+  username: string;
+  user_id: string;
+  full_name: string;
+  passport_seriya: any;
+  group: string;
+}

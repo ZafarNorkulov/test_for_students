@@ -2,6 +2,7 @@ import { Spin, Table, TableColumnsType } from "antd";
 import { Link } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
 import { IAllowSciences, IQuestionResult } from "../../types/data.models";
+import { useEffect, useState } from "react";
 
 const SciencesList = () => {
   interface DataType {
@@ -18,8 +19,17 @@ const SciencesList = () => {
     queryKey: ["sciences"],
     url: `api/v1/quiz/exam/ `,
   });
-  const scienceId = localStorage.getItem("scienceId");
-
+  // const [scienceIds, setScienceIds] = useState<{ science_id: number, index: number }[]>([])
+  // useEffect(() => {
+  //   // Use useEffect to perform the state update once, after scienses is initialized
+  //   if (scienses) {
+  //     setScienceIds(
+  //       scienses.map((item, idx) => ({ science_id: item.id, index: idx }))
+  //     );
+  //   }
+  // }, [scienses])
+  // console.log(scienceIds);
+  const scienceId = 1
   const { data: result } = useGetData<IQuestionResult>({
     queryKey: ["questions"],
     url: `api/v1/quiz/answer/${scienceId}`,
@@ -65,7 +75,7 @@ const SciencesList = () => {
       key: item.id,
       number: index + 1,
       name: item?.science?.name,
-      result: result && result?.question_result ? `${result?.question_result}/30` : "0/0",
+      result: result && result?.question_result ? `${result?.question_result}/30` : "-/-",
       questions: `30 ta`,
       time: `25 daqiqa`,
       actions: (

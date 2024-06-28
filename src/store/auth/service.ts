@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosRequestConfig } from "axios";
 import instance from "../../configs/axios.config";
+import { message } from "antd";
 
 const SignIn = createAsyncThunk(
   "user/SignIn",
@@ -18,6 +19,8 @@ const SignIn = createAsyncThunk(
       }
       return _data;
     } catch (error: any) {
+      message.error(error.response.statusText);
+
       return rejectWithValue(error.response);
     }
   }
