@@ -45,6 +45,16 @@ export interface IUser {
   username: string;
   user_id: string;
   full_name: string;
-  passport_seriya: any;
+  passport_seriya: string;
   group: string;
+}
+
+export interface IResultQuiz {
+  id:number;
+  result_id:string;
+  user:number;
+  science:IScience;
+  group:number;
+  is_active:boolean;
+  question_result:string;
 }

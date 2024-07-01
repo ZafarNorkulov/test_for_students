@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useAppSelector } from "../store";
 import { private_routes, public_routes } from "./routes";
 import NotFound from "../pages/notFound";
+import { initialState } from "../store/auth";
 
 function RenderComponent(MyComponent: RoutesTypeElement) {
   const Component = MyComponent.component;
@@ -28,7 +29,7 @@ const RoutesMiddleware = () => {
     );
   };
   const token = localStorage.getItem("access_token");
-  const auth = useAppSelector((state) => state.auth);
+  const auth = useAppSelector((state) => state.auth) || initialState;
 
   if (token || auth.isAuthenticated) {
     return (
@@ -54,9 +55,7 @@ const RoutesMiddleware = () => {
         element={
           <Navigate
             to={
-              localStorage.getItem("access_token")
-                ? `${window.location.pathname}${window.location.search || ""}`
-                : "/signin"
+              localStorage.getItem("access_token") ? window.location.search ? window.location.pathname + window.location.search : window.location.pathname : "/signin"
             }
             replace
           />

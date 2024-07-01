@@ -10,17 +10,20 @@ const SignIn = createAsyncThunk(
       const isHasToken = localStorage.getItem("access_token");
       const options: AxiosRequestConfig = !isHasToken
         ? { url: "auth/jwt/create", method: "POST", data: data?.data ?? null }
-        : { url: "auth/me", method: "GET", params: {} };
+        : { url: "api/v1/user/profile", method: "GET", params: {} };
       const response = await instance(options);
       const _data = response.data;
-
-      if (_data?.access) {
-        localStorage.setItem("access_token", _data.access);
+      if (response.status !== 200) {
+        return rejectWithValue(new Error("Authorization error!"));
       }
-      return _data;
-    } catch (error: any) {
-      message.error(error.response.statusText);
+      if (!isHasToken) {
+        localStorage.setItem("access_token", _data.access);
+        localStorage.setItem("refresh_token", _data.refresh);
+      }
 
+      return _data;
+    } catch (error) {
+      message.error(error.response.statusText);
       return rejectWithValue(error.response);
     }
   }
@@ -34,24 +37,23 @@ export default SignIn;
 
 //     if (refresh_token) {
 //       const response = await instance({
-//         url: "auth/jwt/refresh",
+//         url: "/auth/jwt/refresh",
 //         method: "POST",
-//         data: { refresh: refresh_token },
+//         data: { refresh_token: refresh_token },
 //       });
 
 //       if (response.status === 200) {
-//         localStorage.setItem("access_token", response.data.access);
-//         localStorage.setItem("refresh_token", response.data.refresh);
-//         store.dispatch(SignIn({ data: null }));
+//         localStorage.setItem("access_token", response.data.access_token);
+//         store.dispatch(signIn({}));
 //       }
 //     } else {
-//       store.dispatch(logout());
+//       logOut();
 //     }
 //   } catch (error) {
-//     localStorage.removeItem("access_token");
-//     localStorage.removeItem("refresh_token");
+//     window.location.href = "/signin";
 //   }
 // };
+
 export const logOut = async () => {
   localStorage.removeItem("access_token");
   localStorage.removeItem("refresh_token");

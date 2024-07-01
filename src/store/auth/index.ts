@@ -4,21 +4,16 @@ import SignIn from "./service";
 const queryClient = new QueryClient();
 
 export type TypeInitialStateAuth = {
-  access_token?: string | null;
-  error?: string;
-  message?: string;
-  isAuthenticated?: boolean;
+  isAuthenticated: boolean;
   isLoading?: boolean;
-  refreshLoading: boolean;
+  status: "pending" | "success" | "error";
+  access_token?: string | null;
 };
 
-const initialState: TypeInitialStateAuth = {
-  access_token: null,
-  error: "",
-  message: "",
+export const initialState: TypeInitialStateAuth = {
   isAuthenticated: false,
   isLoading: false,
-  refreshLoading: true,
+  status: "success",
 };
 
 const SignInSlice = createSlice({
@@ -28,55 +23,36 @@ const SignInSlice = createSlice({
     login(state) {
       state.isAuthenticated = true;
       state.isLoading = false;
-      // state.access_token = action.payload.access_token;
-      // console.log(action)
+      state.status = "success";
     },
     logout(state) {
       state.isAuthenticated = false;
-      state.message = "";
-      state.error = "";
-      state.access_token = null;
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
       queryClient.clear();
     },
-    loadingAuth(state) {
-      state.refreshLoading = false;
-    },
-    setUserInfo: (state, action) => {
-      state.access_token = action.payload;
-    },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(SignIn.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(SignIn.fulfilled, (state, action: PayloadAction<any>) => {
-        console.log(action);
-        if (action.payload) {
-          state.access_token = action?.payload?.access_token || "";
-          state.message = action.payload.message;
-          state.isLoading = false;
-          state.isAuthenticated = true;
-        } else {
-          state.isLoading = false;
-          state.isAuthenticated = false;
-        }
-      })
-      .addCase(SignIn.rejected, (state, action: PayloadAction<any>) => {
-        console.log(action);
-        if (action?.payload?.status === 0) {
-          state.error = action?.payload.data?.error?.message;
-          state.isLoading = false;
-        } else {
-          state.error = "disconnect";
-          state.isLoading = false;
-        }
-      });
+    builder.addCase(SignIn.pending, (state) => {
+      state.isLoading = true;
+      state.status = "pending";
+    });
+    builder.addCase(
+      SignIn.fulfilled,
+      (state, action: PayloadAction<{ access: string }>) => {
+        state.isLoading = false;
+        state.isAuthenticated = true;
+        state.status = "success";
+        state.access_token = action.payload.access;
+      }
+    );
+    builder.addCase(SignIn.rejected, (state) => {
+      state.isLoading = false;
+      state.status = "error";
+    });
   },
 });
 
-export const { login, logout, loadingAuth } = SignInSlice.actions;
+export const { login, logout } = SignInSlice.actions;
 
 export default SignInSlice.reducer;

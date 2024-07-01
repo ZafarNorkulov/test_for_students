@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import Logo from "../assets/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../store/auth";
@@ -6,14 +6,26 @@ import { Avatar, Popover } from "antd";
 import { useAppDispatch } from "../store";
 import useGetData from "../hooks/useGetData";
 import { IUser } from "../types/data.models";
+import SignIn from "../store/auth/service";
 
 const UserLayout = ({ children }: { children: ReactElement }) => {
   const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
+
+
   const { data: user } = useGetData<IUser>({
     queryKey: ["user"],
-    url: "api/v1/user/profile"
+    url: "api/v1/user/profile",
+    options: { refetchOnWindowFocus: false }
   })
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      dispatch(SignIn({}));
+    }
+  }, []);
+
   const content = (
     <ul className="profile-block">
       <li className="flex item-center gap-x-4 ">
@@ -21,7 +33,7 @@ const UserLayout = ({ children }: { children: ReactElement }) => {
         <div className="flex flex-col items-center">
           <p className="m-0 text-xl ">{user?.full_name}</p>
           <p className="text-sm text-[rgb(108,117,125)] font-medium">
-            KI-17-21
+            {user?.group}
           </p>
         </div>
       </li>

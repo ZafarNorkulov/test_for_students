@@ -1,10 +1,13 @@
-import { Form, Input } from "antd";
-import { useAppDispatch } from "../../store";
+import { Form, Input, message } from "antd";
+import { useAppDispatch, useAppSelector } from "../../store";
 import SignIn from "../../store/auth/service";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate()
+  const auth = useAppSelector(state => state.auth)
   type FieldType = {
     username: string;
     password: string;
@@ -13,10 +16,20 @@ const Login = () => {
   const onFinish = async (values: FieldType) => {
     try {
       await dispatch(SignIn({ data: values }));
+      message.success("Tizimga Xush kelibiz!");
     } catch (err) {
       console.log(err);
+      message.error("Login failed. Please check your credentials.");
+
     }
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token")
+    if (!(token && auth.isAuthenticated)) {
+      navigate("/signin")
+    }
+  }, [auth.isAuthenticated])
 
   const [form] = Form.useForm<FieldType>();
   return (

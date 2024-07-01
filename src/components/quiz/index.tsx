@@ -65,7 +65,7 @@ const QuizById = ({
       data: myAnswers,
     });
     if (response.data.message === "success") {
-      navigate("/exams");
+      navigate("/exams/result/");
       setOpenConfirm(false);
     }
   };
@@ -79,7 +79,7 @@ const QuizById = ({
         method: "POST",
         data: myAnswers,
       });
-      navigate("/exams");
+      navigate("/exams/result");
     }
   }
   const content = (
