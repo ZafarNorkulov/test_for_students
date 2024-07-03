@@ -28,12 +28,12 @@ const SciencesList = () => {
   //   }
   // }, [scienses])
   // console.log(scienceIds);
-  const scienceId = 1
-  const { data: result } = useGetData<IQuestionResult>({
-    queryKey: ["questions"],
-    url: `api/v1/quiz/answer/${scienceId}`,
+  // const scienceId = 1
+  // const { data: result } = useGetData<IQuestionResult>({
+  //   queryKey: ["questions"],
+  //   url: `api/v1/quiz/answer/${scienceId}`,
 
-  });
+  // });
 
   const columns: TableColumnsType<DataType> = [
     {
@@ -45,12 +45,12 @@ const SciencesList = () => {
       title: "Fan nomi",
       dataIndex: "name",
     },
-    {
-      title: "Natija",
-      dataIndex: "result",
-      render: (text) => <p className="text-neutral-400">{text}</p>,
-      width: 100,
-    },
+    // {
+    //   title: "Natija",
+    //   dataIndex: "result",
+    //   render: (text) => <p className="text-neutral-400">{text}</p>,
+    //   width: 100,
+    // },
     {
       title: "Savollar soni",
       dataIndex: "questions",
@@ -74,7 +74,7 @@ const SciencesList = () => {
       key: item.id,
       number: index + 1,
       name: item?.science?.name,
-      result: result && result?.question_result ? `${result?.question_result}/30` : "-/-",
+      // result: result && result?.question_result ? `${result?.question_result}/30` : "-/-",
       questions: `30 ta`,
       time: `25 daqiqa`,
       actions: (
