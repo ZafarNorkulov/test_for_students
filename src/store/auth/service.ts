@@ -17,14 +17,20 @@ const SignIn = createAsyncThunk(
       if (response.status !== 200) {
         return rejectWithValue(new Error("Authorization error!"));
       }
+      if (
+        response.config.url?.includes("auth/jwt/create") &&
+        response.status === 200
+      ) {
+        message.success("Tizimga Xush kelibiz!");
+      }
       if (!isHasToken) {
         localStorage.setItem("access_token", _data.access);
         localStorage.setItem("refresh_token", _data.refresh);
       }
 
       return _data;
-    } catch (error:any) {
-      message.error(error.response.statusText);
+    } catch (error: any) {
+      message.error("J.SH.SH.I.R yoki Parol xato!");
       return rejectWithValue(error.response);
     }
   }
@@ -42,7 +48,7 @@ export const refreshToken = async () => {
         method: "POST",
         data: { refresh: refresh_token },
       });
-console.log(response)
+      console.log(response);
       if (response.status === 200) {
         localStorage.setItem("access_token", response.data.access);
         store.dispatch(SignIn({}));

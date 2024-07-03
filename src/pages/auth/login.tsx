@@ -16,7 +16,6 @@ const Login = () => {
   const onFinish = async (values: FieldType) => {
     try {
       await dispatch(SignIn({ data: values }));
-      message.success("Tizimga Xush kelibiz!");
     } catch (err) {
       console.log(err);
       message.error("Login failed. Please check your credentials.");
