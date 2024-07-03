@@ -1,16 +1,16 @@
 import { ReactElement, useEffect } from "react";
 import Logo from "../assets/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../store/auth";
-import { Avatar, Popover } from "antd";
-import { useAppDispatch } from "../store";
+import { Avatar, Popover, Spin } from "antd";
+import { useAppDispatch, useAppSelector } from "../store";
 import useGetData from "../hooks/useGetData";
 import { IUser } from "../types/data.models";
 import SignIn from "../store/auth/service";
+import { AUTH_ACTIONS } from "../store/auth";
 
 const UserLayout = ({ children }: { children: ReactElement }) => {
   const dispatch = useAppDispatch();
-
+  const auth = useAppSelector(state => state.auth)
   const navigate = useNavigate();
 
 
@@ -44,7 +44,7 @@ const UserLayout = ({ children }: { children: ReactElement }) => {
 
       <li
         onClick={() => {
-          dispatch(logout());
+          dispatch(AUTH_ACTIONS.logout());
           navigate("/signin");
         }}
       >
@@ -52,7 +52,9 @@ const UserLayout = ({ children }: { children: ReactElement }) => {
       </li>
     </ul>
   );
-
+  if (!auth.isAuthenticated) {
+    return <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center"><Spin size="large" /></div>
+  }
   return (
     <div>
       <header

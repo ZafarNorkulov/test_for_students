@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosRequestConfig } from "axios";
 import instance from "../../configs/axios.config";
 import { message } from "antd";
+import store from "..";
 
 const SignIn = createAsyncThunk(
   "user/SignIn",
@@ -31,28 +32,26 @@ const SignIn = createAsyncThunk(
 
 export default SignIn;
 
-// export const refreshToken = async () => {
-//   try {
-//     const refresh_token = localStorage.getItem("refresh_token");
+export const refreshToken = async () => {
+  try {
+    const refresh_token = localStorage.getItem("refresh_token");
 
-//     if (refresh_token) {
-//       const response = await instance({
-//         url: "/auth/jwt/refresh",
-//         method: "POST",
-//         data: { refresh_token: refresh_token },
-//       });
-
-//       if (response.status === 200) {
-//         localStorage.setItem("access_token", response.data.access_token);
-//         store.dispatch(signIn({}));
-//       }
-//     } else {
-//       logOut();
-//     }
-//   } catch (error) {
-//     window.location.href = "/signin";
-//   }
-// };
+    if (refresh_token) {
+      const response = await instance({
+        url: "auth/jwt/refresh",
+        method: "POST",
+        data: { refresh: refresh_token },
+      });
+console.log(response)
+      if (response.status === 200) {
+        localStorage.setItem("access_token", response.data.access);
+        store.dispatch(SignIn({}));
+      }
+    }
+  } catch (error) {
+    window.location.href = "/signin";
+  }
+};
 
 export const logOut = async () => {
   localStorage.removeItem("access_token");

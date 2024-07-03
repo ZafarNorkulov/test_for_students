@@ -7,13 +7,14 @@ export type TypeInitialStateAuth = {
   isAuthenticated: boolean;
   isLoading?: boolean;
   status: "pending" | "success" | "error";
-  access_token?: string | null;
+  access_token: string | null;
 };
 
 export const initialState: TypeInitialStateAuth = {
   isAuthenticated: false,
   isLoading: false,
   status: "success",
+  access_token: null,
 };
 
 const SignInSlice = createSlice({
@@ -30,6 +31,10 @@ const SignInSlice = createSlice({
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
       queryClient.clear();
+    },
+    signOut(state) {
+      state.isAuthenticated = false;
+      state.status = "success";
     },
   },
   extraReducers: (builder) => {
@@ -53,6 +58,6 @@ const SignInSlice = createSlice({
   },
 });
 
-export const { login, logout } = SignInSlice.actions;
+export const AUTH_ACTIONS = SignInSlice.actions;
 
 export default SignInSlice.reducer;
