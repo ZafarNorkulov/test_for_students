@@ -1,14 +1,13 @@
 import { Spin, Table, TableColumnsType } from "antd";
 import { Link } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
-import { IAllowSciences, IQuestionResult } from "../../types/data.models";
+import { IAllowSciences } from "../../types/data.models";
 
 const SciencesList = () => {
   interface DataType {
     key: number;
     number: number;
     name: string;
-    result: string;
     questions: string;
     time: string;
     actions: JSX.Element;
