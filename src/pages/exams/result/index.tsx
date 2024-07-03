@@ -2,10 +2,8 @@ import useGetData from '../../../hooks/useGetData'
 import { Avatar, Button, Card, message } from 'antd'
 import { IResultQuiz, IUser } from '../../../types/data.models'
 import confetti from "canvas-confetti"
-import { useEffect } from 'react'
 
 const QuestionResult = () => {
-    const scienceId = localStorage.getItem("scienceId")
     const { data: result } = useGetData<IResultQuiz>({
         queryKey: ["quiz-result"],
         url: `api/v1/quiz/answer/${1}`,

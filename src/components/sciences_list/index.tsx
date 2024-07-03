@@ -2,7 +2,6 @@ import { Spin, Table, TableColumnsType } from "antd";
 import { Link } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
 import { IAllowSciences, IQuestionResult } from "../../types/data.models";
-import { useEffect, useState } from "react";
 
 const SciencesList = () => {
   interface DataType {

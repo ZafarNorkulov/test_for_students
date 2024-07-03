@@ -23,7 +23,7 @@ const SignIn = createAsyncThunk(
       }
 
       return _data;
-    } catch (error) {
+    } catch (error:any) {
       message.error(error.response.statusText);
       return rejectWithValue(error.response);
     }
