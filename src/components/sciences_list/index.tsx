@@ -1,4 +1,4 @@
-import { Skeleton, Spin, Table, TableColumnsType } from "antd";
+import { Skeleton, Table, TableColumnsType } from "antd";
 import { Link } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
 import { IAllowSciences } from "../../types/data.models";
