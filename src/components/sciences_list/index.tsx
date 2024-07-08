@@ -1,4 +1,4 @@
-import { Spin, Table, TableColumnsType } from "antd";
+import { Skeleton, Spin, Table, TableColumnsType } from "antd";
 import { Link } from "react-router-dom";
 import useGetData from "../../hooks/useGetData";
 import { IAllowSciences } from "../../types/data.models";
@@ -89,9 +89,13 @@ const SciencesList = () => {
     })
   );
   return (
-    <Spin spinning={isLoading}>
-      <Table columns={columns} dataSource={data} bordered pagination={false} />
-    </Spin>
+    isLoading ? (
+      <div className="bg-white p-5" >
+        <Skeleton active title={false} paragraph={{ rows: 4 }} />
+      </div>
+
+    ) :
+      (<Table columns={columns} dataSource={data} bordered pagination={false} />)
   );
 };
 

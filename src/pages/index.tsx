@@ -15,7 +15,7 @@ const Home = () => {
       <div className="container-fluid home mx-5">
         <div className="grid grid-cols-12">
           {cards?.map((item) => (
-            <Link to={item?.url} className="col-span-2" key={item?.url}>
+            <Link to={item?.url} className="lg:col-span-2 md:col-span-4 col-span-6" key={item?.url}>
               <Card
                 hoverable
                 className="flex flex-col items-center py-5"

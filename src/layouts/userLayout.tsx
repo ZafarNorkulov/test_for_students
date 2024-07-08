@@ -1,12 +1,13 @@
 import { ReactElement, useEffect } from "react";
 import Logo from "../assets/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { Avatar, Popover, Spin } from "antd";
+import { Avatar, Popover } from "antd";
 import { useAppDispatch, useAppSelector } from "../store";
 import useGetData from "../hooks/useGetData";
 import { IUser } from "../types/data.models";
 import SignIn from "../store/auth/service";
 import { AUTH_ACTIONS } from "../store/auth";
+import Loader from "../components/loader";
 
 const UserLayout = ({ children }: { children: ReactElement }) => {
   const dispatch = useAppDispatch();
@@ -53,7 +54,7 @@ const UserLayout = ({ children }: { children: ReactElement }) => {
     </ul>
   );
   if (!auth.isAuthenticated) {
-    return <div className="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center"><Spin size="large" /></div>
+    return <Loader />
   }
   return (
     <div>
@@ -71,10 +72,12 @@ const UserLayout = ({ children }: { children: ReactElement }) => {
           <img
             src={Logo}
             alt="Logo"
-            className="w-[22%] rounded-full"
+            className="md:w-[22%] sm:w-[35%] rounded-full"
             loading="lazy"
           />
-          Buxoro Xalqaro Tibbiyot Texnikumi
+          <h3 className="md:flex hidden">
+            Buxoro Xalqaro Tibbiyot Texnikumi
+          </h3>
         </Link>
         <Popover
           placement="bottomRight"

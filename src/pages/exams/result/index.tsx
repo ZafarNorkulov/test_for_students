@@ -2,11 +2,18 @@ import useGetData from '../../../hooks/useGetData'
 import { Avatar, Button, Card, message } from 'antd'
 import { IResultQuiz, IUser } from '../../../types/data.models'
 import confetti from "canvas-confetti"
+import Loader from '../../../components/loader'
 
 const QuestionResult = () => {
-    const { data: result } = useGetData<IResultQuiz>({
+    const { data: result, error } = useGetData<IResultQuiz>({
         queryKey: ["quiz-result"],
         url: `api/v1/quiz/answer/${1}`,
+
+        options: {
+            staleTime: Infinity,
+            retry: 0,
+
+        }
     })
     const { data: user } = useGetData<IUser>({
         queryKey: ["user"],
@@ -24,6 +31,10 @@ const QuestionResult = () => {
         });
 
         message.success("Tabriklaymiz!")
+    }
+    if (error) {
+        message.error("Sizning so'rovingiz bo'yicha ma'lumot topilmadi")
+        return <Loader />
     }
     return (
         <div className='w-full h-[70vh] flex items-center justify-center'>
